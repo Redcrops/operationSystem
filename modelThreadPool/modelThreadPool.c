@@ -53,6 +53,7 @@ static void *worker_func(void *arg)
                 {
 
                     pool->liveThreadNums--;
+                    pthread_mutex_unlock(&pool->mutexPool);
                     exitSelf(pool);
                     /*自行离开*/
                 }
@@ -62,6 +63,7 @@ static void *worker_func(void *arg)
         if (pool->shutDown == 1)
         {
             pool->liveThreadNums--;
+            pthread_mutex_unlock(&pool->mutexPool);
             exitSelf(pool);
         }
         /*到这里任务队列一定有任务*/
@@ -87,7 +89,7 @@ static void *worker_func(void *arg)
 
         performTask.worker(performTask.arg);
 
-        sleep(10000);
+        sleep(5);
 
         pthread_mutex_lock(&pool->mutexBusy);
         pool->busyThreadNums--;

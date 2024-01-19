@@ -19,21 +19,19 @@ int main()
     sleep(5);
     for (int idx = 0; idx < TASK_NUM; idx++)
     {
-        
-        
+
         poolAdd(pool, print, &num);
         usleep(550);
         num++;
         pthread_mutex_lock(&pool->mutexBusy);
-        printf("live:%d,busy:%d\n",pool->liveThreadNums,pool->busyThreadNums);
+        printf("live:%d,busy:%d\n", pool->liveThreadNums, pool->busyThreadNums);
         printf("tast:%d\n", pool->queueSize);
         pthread_mutex_unlock(&pool->mutexBusy);
     }
 
     sleep(10);
     printf("tast:%d\n", pool->queueSize);
-    sleep(10000);
-
+    sleep(10);
 
     poolDestroy(pool);
 
